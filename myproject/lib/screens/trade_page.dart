@@ -3,6 +3,8 @@ import '../widgets/drawer_widget.dart';
 import '../screens/history_page.dart';
 
 class TradePage extends StatefulWidget {
+  const TradePage({super.key});
+
   @override
   _TradePageState createState() => _TradePageState();
 }
@@ -103,11 +105,11 @@ class _TradePageState extends State<TradePage> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {},
-              child: Text('BUY'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
                 foregroundColor: Colors.white,
               ),
+              child: Text('BUY'),
             ),
           ],
         ),

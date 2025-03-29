@@ -1,4 +1,3 @@
-// drawer.dart
 
 import 'package:flutter/material.dart';
 
@@ -6,7 +5,7 @@ class DrawerWidget extends StatelessWidget {
   final List<Map<String, dynamic>> options;
   final Function(BuildContext, String) onOptionSelected;
 
-  DrawerWidget({
+  const DrawerWidget({super.key, 
     required this.options,
     required this.onOptionSelected,
   });

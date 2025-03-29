@@ -5,7 +5,7 @@ import '../widgets/drawer_widget.dart';
 class AboutPage extends StatelessWidget {
   final List<Map<String, dynamic>> options;
 
-  AboutPage({required this.options});
+  const AboutPage({super.key, required this.options});
 
   @override
   Widget build(BuildContext context) {

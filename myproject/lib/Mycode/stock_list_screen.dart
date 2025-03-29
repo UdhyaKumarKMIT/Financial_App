@@ -3,6 +3,8 @@ import 'stock_card.dart';
 import 'stock_service.dart';
 
 class StockListScreen extends StatefulWidget {
+  const StockListScreen({super.key});
+
   @override
   _StockListScreenState createState() => _StockListScreenState();
 }

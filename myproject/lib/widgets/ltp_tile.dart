@@ -5,7 +5,7 @@ class LtpTile extends StatelessWidget {
   final double? ltpValue;
   final VoidCallback onRemove;
 
-  LtpTile({required this.identifier, this.ltpValue, required this.onRemove});
+  const LtpTile({super.key, required this.identifier, this.ltpValue, required this.onRemove});
 
   @override
   Widget build(BuildContext context) {
