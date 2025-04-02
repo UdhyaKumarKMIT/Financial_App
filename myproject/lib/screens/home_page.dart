@@ -3,6 +3,7 @@ import 'package:myproject/screens/FinancialPlanner.dart';
 import 'package:myproject/screens/ProfilePage.dart';
 
 import 'package:myproject/screens/ChatBotPage.dart';
+import 'package:myproject/StockMarketApp.dart';
 import 'CoursePage.dart';
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
@@ -73,7 +74,8 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: Center(child: Text("Swipe from left or tap top-left icon")),
+     body: StockMarketApp(),
+
     );
   }
 }

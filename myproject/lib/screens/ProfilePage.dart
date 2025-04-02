@@ -3,6 +3,8 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }

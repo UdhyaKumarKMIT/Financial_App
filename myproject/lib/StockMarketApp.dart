@@ -3,9 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-void main() {
-  runApp(const StockMarketApp());
-}
+
 
 class StockMarketApp extends StatelessWidget {
   const StockMarketApp({super.key});
@@ -39,7 +37,7 @@ class _StockMarketPageState extends State<StockMarketPage> {
   void initState() {
     super.initState();
     fetchStockPrices();
-    timer = Timer.periodic(const Duration(seconds: 30), (Timer t) => fetchStockPrices());
+
   }
 
   Future<void> fetchStockPrices() async {
@@ -47,6 +45,7 @@ class _StockMarketPageState extends State<StockMarketPage> {
       final response = await http.get(Uri.parse("$baseUrl?function=GLOBAL_QUOTE&symbol=$stock&apikey=$apiKey"));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
+        print(data);
         setState(() {
           stockPrices[stock] = double.tryParse(data["Global Quote"]["05. price"]) ?? 0.0;
         });
