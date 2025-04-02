@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myproject/screens/FinancialPlanner.dart';
 import 'package:myproject/screens/ProfilePage.dart';
+
+import 'package:myproject/screens/ChatBotPage.dart';
 import 'CoursePage.dart';
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
@@ -32,7 +34,7 @@ class MyHomePage extends StatelessWidget {
               title: Text("Chat Bot"),
                onTap: (){
                    Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CoursePage()));
+                    MaterialPageRoute(builder: (context) => ChatBotPage()));
                  },
             ),
             ListTile(
