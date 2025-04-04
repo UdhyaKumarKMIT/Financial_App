@@ -4,7 +4,10 @@ import 'package:myproject/screens/ProfilePage.dart';
 import '../FinancialPlanner/expense_tracker.dart';
 import 'package:myproject/screens/ChatBotPage.dart';
 import 'package:myproject/StockMarketApp.dart';
+
 import 'package:myproject/screens/CrisisManagement.dart';
+
+import 'package:myproject/screens/FinancialTherapist.dart';
 
 import 'CoursePage.dart';
 class MyHomePage extends StatelessWidget {
@@ -39,7 +42,14 @@ class MyHomePage extends StatelessWidget {
                    Navigator.push(context,
                     MaterialPageRoute(builder: (context) => ChatBotPage()));
                  },
-            ),
+            ), ListTile(
+              leading: Icon(Icons.attach_money),
+              title: Text("Financial Therapist"),
+              onTap: (){
+                Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FinTherapistApp()));
+              },
+            ),    
             ListTile(
               leading: Icon(Icons.school),
               title: Text("Course"),
