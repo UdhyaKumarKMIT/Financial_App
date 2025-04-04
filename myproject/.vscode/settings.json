@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "C:/Users/udhya/OneDrive/Desktop/Flutter/myproject/linux"
+    "cmake.sourceDirectory": "C:/Users/udhya/OneDrive/Desktop/Flutter/myproject/linux",
+    "git.ignoreLimitWarning": true
 }
