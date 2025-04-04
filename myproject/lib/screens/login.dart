@@ -1,6 +1,5 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:myproject/screens/SignupPage.dart';
 void main() {
   runApp(const MaterialApp(home: LoginPage()));
 }

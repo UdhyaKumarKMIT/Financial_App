@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:myproject/screens/FinancialPlanner.dart';
 import 'package:myproject/screens/ProfilePage.dart';
-
+import '../FinancialPlanner/expense_tracker.dart';
 import 'package:myproject/screens/ChatBotPage.dart';
 import 'package:myproject/StockMarketApp.dart';
+import 'package:myproject/screens/CrisisManagement.dart';
+
 import 'CoursePage.dart';
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
@@ -48,12 +50,28 @@ class MyHomePage extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.attach_money),
-              title: Text("Financial Planneer"),
+              title: Text("Financial Planner"),
               onTap: (){
                 Navigator.push(context,
                 MaterialPageRoute(builder: (context) => FinancialPlannerScreen()));
               },
-            ),
+            ), 
+            ListTile(
+              leading: Icon(Icons.attach_money),
+              title: Text("Expense Tracker"),
+              onTap: (){
+                Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ExpenseTrackerPage()));
+              },
+            ),             
+             ListTile(
+              leading: Icon(Icons.attach_money),
+              title: Text("Crisis Manager"),
+              onTap: (){
+                Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CrisisManagement()));
+              },
+            ), 
              ListTile(
               leading: Icon(Icons.account_circle_outlined),
               title: Text("Profile"),
