@@ -13,7 +13,7 @@ class FinTherapistApp extends StatelessWidget {
     return MaterialApp(
       title: 'Financial Therapist',
       theme: ThemeData(
-        primarySwatch: Colors.teal,
+        primarySwatch: Colors.blue,
       ),
       home: FinTherapistPage(),
     );
@@ -31,10 +31,9 @@ class _FinTherapistPageState extends State<FinTherapistPage> {
   final TextEditingController _controller = TextEditingController();
   final List<Map<String, String>> _messages = [];
   bool _isLoading = false;
+  final FocusNode _textFieldFocusNode = FocusNode(); // Added focus node
 
-  // 🔹 Replace with your actual API Key from Google AI Studio
   final String _apiKey = "AIzaSyAiT3MJ3hfV0KU7zBu5LhFtnFIRXAXXTSU";
-
   late GenerativeModel _model;
 
   @override
@@ -43,45 +42,78 @@ class _FinTherapistPageState extends State<FinTherapistPage> {
     _model = GenerativeModel(model: "tunedModels/financial-therapist-931s6ara3nne", apiKey: _apiKey);
   }
 
-  Future<String> _fetchTherapistResponse(String userMessage) async {
-    setState(() {
-      _isLoading = true;
-    });
+  @override
+  void dispose() {
+    _textFieldFocusNode.dispose(); // Clean up focus node
+    super.dispose();
+  }
 
+  List<TextSpan> _parseText(String text) {
+    final List<TextSpan> spans = [];
+    final RegExp boldRegex = RegExp(r'\*\*(.*?)\*\*');
+    int currentIndex = 0;
+    final textColor = Colors.black;
+
+    for (final match in boldRegex.allMatches(text)) {
+      if (match.start > currentIndex) {
+        spans.add(TextSpan(
+          text: text.substring(currentIndex, match.start),
+          style: TextStyle(color: textColor),
+        ));
+      }
+
+      spans.add(TextSpan(
+        text: match.group(1),
+        style: TextStyle(
+          color: textColor,
+          fontWeight: FontWeight.bold,
+        ),
+      ));
+
+      currentIndex = match.end;
+    }
+
+    if (currentIndex < text.length) {
+      spans.add(TextSpan(
+        text: text.substring(currentIndex),
+        style: TextStyle(color: textColor),
+      ));
+    }
+
+    return spans;
+  }
+
+  Future<String> _fetchTherapistResponse(String userMessage) async {
+    setState(() => _isLoading = true);
+    
     try {
       final chatSession = _model.startChat();
       final response = await chatSession.sendMessage(Content.text(userMessage));
-
-      if (response.text != null) {
-        return response.text!;
-      } else {
-        return "I want to understand more. Could you share more about your financial concerns?";
-      }
+      return response.text ?? "I want to understand more. Could you share more about your financial concerns?";
     } catch (e) {
       print('Error: $e');
       return "Connection failed. Please check your internet and API key.";
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      setState(() => _isLoading = false);
     }
   }
 
   void _sendMessage() async {
-    if (_controller.text.isNotEmpty && !_isLoading) {
-      final userMessage = _controller.text;
-      _controller.clear();
+    final text = _controller.text.trim();
+    if (text.isEmpty || _isLoading) return;
 
-      setState(() {
-        _messages.add({'sender': 'You', 'message': userMessage});
-      });
+    _controller.clear();
+    _textFieldFocusNode.requestFocus(); // Keep focus on text field
 
-      final therapistResponse = await _fetchTherapistResponse(userMessage);
+    setState(() {
+      _messages.add({'sender': 'You', 'message': text});
+    });
 
-      setState(() {
-        _messages.add({'sender': 'Therapist', 'message': therapistResponse});
-      });
-    }
+    final therapistResponse = await _fetchTherapistResponse(text);
+
+    setState(() {
+      _messages.add({'sender': 'Therapist', 'message': therapistResponse});
+    });
   }
 
   @override
@@ -90,16 +122,17 @@ class _FinTherapistPageState extends State<FinTherapistPage> {
       appBar: AppBar(
         title: Text('Financial Therapist'),
         centerTitle: true,
-        backgroundColor: Colors.teal[700],
+        backgroundColor: Colors.blue[700],
       ),
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.all(8),
+              reverse: true, // New messages appear at the bottom
               itemCount: _messages.length,
               itemBuilder: (context, index) {
-                final message = _messages[index];
+                final message = _messages.reversed.toList()[index];
                 final isUser = message['sender'] == 'You';
 
                 return Container(
@@ -111,7 +144,7 @@ class _FinTherapistPageState extends State<FinTherapistPage> {
                     ),
                     padding: EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: isUser ? Colors.teal[600] : Colors.grey[200],
+                      color: isUser ? Colors.blue[600] : Colors.grey[200],
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
@@ -128,16 +161,22 @@ class _FinTherapistPageState extends State<FinTherapistPage> {
                           message['sender']!,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: isUser ? Colors.white : Colors.teal[800],
+                            color: isUser ? Colors.white : Colors.blue[800],
                           ),
                         ),
                         SizedBox(height: 4),
-                        Text(
-                          message['message']!,
-                          style: TextStyle(
-                            color: isUser ? Colors.white : Colors.black,
-                          ),
-                        ),
+                        isUser
+                            ? Text(
+                                message['message']!,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              )
+                            : RichText(
+                                text: TextSpan(
+                                  children: _parseText(message['message']!),
+                                ),
+                              ),
                       ],
                     ),
                   ),
@@ -157,6 +196,7 @@ class _FinTherapistPageState extends State<FinTherapistPage> {
                 Expanded(
                   child: TextField(
                     controller: _controller,
+                    focusNode: _textFieldFocusNode,
                     decoration: InputDecoration(
                       hintText: 'Share your financial thoughts...',
                       border: OutlineInputBorder(
@@ -166,13 +206,14 @@ class _FinTherapistPageState extends State<FinTherapistPage> {
                       fillColor: Colors.grey[100],
                     ),
                     maxLines: null,
-                    onSubmitted: (text) => _sendMessage(),
+                    textInputAction: TextInputAction.send,
+                    onSubmitted: (_) => _sendMessage(),
                   ),
                 ),
                 SizedBox(width: 8),
                 IconButton(
-                  icon: Icon(Icons.send, color: Colors.teal),
-                  onPressed: _isLoading ? null : _sendMessage,
+                  icon: Icon(Icons.send, color: Colors.blue),
+                  onPressed: _sendMessage,
                 ),
               ],
             ),
