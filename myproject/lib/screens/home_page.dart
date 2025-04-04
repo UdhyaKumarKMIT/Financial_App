@@ -42,46 +42,47 @@ class MyHomePage extends StatelessWidget {
                    Navigator.push(context,
                     MaterialPageRoute(builder: (context) => ChatBotPage()));
                  },
-            ), ListTile(
-              leading: Icon(Icons.attach_money),
-              title: Text("Financial Therapist"),
-              onTap: (){
-                Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FinTherapistApp()));
-              },
-            ),    
-            ListTile(
-              leading: Icon(Icons.school),
-              title: Text("Course"),
-              onTap: (){
-                   Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CoursePage()));
-                 },
-            ),
-            ListTile(
-              leading: Icon(Icons.attach_money),
-              title: Text("Financial Planner"),
-              onTap: (){
-                Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FinancialPlannerScreen()));
-              },
-            ), 
-            ListTile(
-              leading: Icon(Icons.attach_money),
-              title: Text("Expense Tracker"),
-              onTap: (){
-                Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ExpenseTrackerPage()));
-              },
-            ),             
-             ListTile(
-              leading: Icon(Icons.attach_money),
-              title: Text("Crisis Manager"),
-              onTap: (){
-                Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CrisisManagement()));
-              },
-            ), 
+            ),ListTile(
+  leading: Icon(Icons.psychology), // Changed from attach_money
+  title: Text("Financial Therapist"),
+  onTap: () {
+    Navigator.push(context,
+      MaterialPageRoute(builder: (context) => FinTherapistApp()));
+  },
+),    
+ListTile(
+  leading: Icon(Icons.school), // Suitable for courses
+  title: Text("Course"),
+  onTap: () {
+    Navigator.push(context,
+      MaterialPageRoute(builder: (context) => CoursePage()));
+  },
+),
+ListTile(
+  leading: Icon(Icons.calculate), // Changed from attach_money
+  title: Text("Financial Planner"),
+  onTap: () {
+    Navigator.push(context,
+      MaterialPageRoute(builder: (context) => FinancialPlannerScreen()));
+  },
+), 
+ListTile(
+  leading: Icon(Icons.bar_chart), // Changed from attach_money
+  title: Text("Expense Tracker"),
+  onTap: () {
+    Navigator.push(context,
+      MaterialPageRoute(builder: (context) => ExpenseTrackerPage()));
+  },
+),             
+ListTile(
+  leading: Icon(Icons.warning_amber), // Changed from attach_money
+  title: Text("Crisis Manager"),
+  onTap: () {
+    Navigator.push(context,
+      MaterialPageRoute(builder: (context) => CrisisManagement()));
+  },
+),
+
              ListTile(
               leading: Icon(Icons.account_circle_outlined),
               title: Text("Profile"),

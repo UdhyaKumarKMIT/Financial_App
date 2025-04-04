@@ -1,5 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+
+import 'package:myproject/screens/home_page.dart';
+
 void main() {
   runApp(const MaterialApp(home: LoginPage()));
 }
@@ -10,7 +13,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true, // Allows screen to adjust when keyboard appears
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
@@ -22,103 +25,88 @@ class LoginPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios, size: 20, color: Colors.black),
         ),
       ),
-      body: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        width: double.infinity,
+      body: SingleChildScrollView( // Wrap in ScrollView to prevent overflow
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Expanded(
+            FadeInUp(
+              duration: const Duration(milliseconds: 1000),
+              child: const Text(
+                "Login",
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(height: 10),
+            FadeInUp(
+              duration: const Duration(milliseconds: 1200),
+              child: Text(
+                "Login to your account",
+                style: TextStyle(fontSize: 15, color: Colors.grey[700]),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      FadeInUp(
-                        duration: const Duration(milliseconds: 1000),
-                        child: const Text(
-                          "Login",
-                          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      FadeInUp(
-                        duration: const Duration(milliseconds: 1200),
-                        child: Text(
-                          "Login to your account",
-                          style: TextStyle(fontSize: 15, color: Colors.grey[700]),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: Column(
-                      children: <Widget>[
-                        FadeInUp(
-                          duration: const Duration(milliseconds: 1200),
-                          child: makeInput(label: "Email"),
-                        ),
-                        FadeInUp(
-                          duration: const Duration(milliseconds: 1300),
-                          child: makeInput(label: "Password", obscureText: true),
-                        ),
-                      ],
-                    ),
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 1200),
+                    child: makeInput(label: "Email"),
                   ),
                   FadeInUp(
-                    duration: const Duration(milliseconds: 1400),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40),
-                      child: Container(
-                        padding: const EdgeInsets.all(3),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          border: Border.all(color: Colors.black),
-                        ),
-                        child: MaterialButton(
-                          minWidth: double.infinity,
-                          height: 41, // Fixed button height issue
-                          onPressed: () {},
-                          color: Colors.greenAccent,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-                          child: const Text(
-                            "Login",
-                            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-                          ),
-                        ),
-                      ),
-                    ),
+                    duration: const Duration(milliseconds: 1300),
+                    child: makeInput(label: "Password", obscureText: true),
                   ),
-                  FadeInUp(
-                    duration: const Duration(milliseconds: 1500),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        const Text("Don't have an account? "),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const SignupPage()),
-                            );
-                          },
-                          child: const Text(
-                            "Sign up",
-                            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18, color: Colors.blue),
-                          ),
-                        ),
-                      ],
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            FadeInUp(
+              duration: const Duration(milliseconds: 1400),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => const MyHomePage()));
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      backgroundColor: Colors.greenAccent,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                    ),
+                    child: const Text("Login", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            FadeInUp(
+              duration: const Duration(milliseconds: 1500),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Text("Don't have an account? "),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => const SignupPage()));
+                    },
+                    child: const Text(
+                      "Sign up",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18, color: Colors.blue),
                     ),
                   ),
                 ],
               ),
             ),
+            const SizedBox(height: 20),
             FadeInUp(
               duration: const Duration(milliseconds: 1200),
               child: Container(
-                height: MediaQuery.of(context).size.height / 3,
+                height: 200, // Set fixed height to avoid overflow
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('lib/assets/images/background.png'),
@@ -150,7 +138,7 @@ class LoginPage extends StatelessWidget {
             border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey.shade400)),
           ),
         ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 20), // Reduced padding to fix layout
       ],
     );
   }

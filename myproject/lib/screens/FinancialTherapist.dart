@@ -85,9 +85,13 @@ class _FinTherapistPageState extends State<FinTherapistPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Financial Therapist'),
-        centerTitle: true,
-        backgroundColor: Colors.teal[700],
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+          title: Text('Financial Therapist'),
+          centerTitle: true,
+          backgroundColor: Colors.blueAccent,
       ),
       body: Column(
         children: [

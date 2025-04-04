@@ -124,6 +124,10 @@ class _ChatBotPageState extends State<ChatBotPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
           title: Text('ChatBot'),
           centerTitle: true,
           backgroundColor: Colors.blueAccent,
